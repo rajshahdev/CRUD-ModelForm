@@ -1,4 +1,15 @@
 {% extends 'register/base.html' %}
 {% block content %} 
-<h4>add and show</h4>
+
+<div class="row">
+    <div class="col-sm-4">
+        <h4 class="text-center alert alert-info">Add And Show</h4>
+        <form method="post">
+            {% csrf_token %}
+            {{form}}
+            <input type="submit" class="btn btn-success mt-3" value="Add">
+        </form>
+    </div>
+</div>
+
 {% endblock content %}
