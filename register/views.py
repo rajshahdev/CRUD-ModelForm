@@ -25,11 +25,21 @@ def show_home(request):
 
     return render(request,'register/addandshow.html',{'form':fm,'show':get_all})
 
-def show_update(request):
-    return render(request,'register/updateandshow.html')
-
 def delete_data(request,id):
     if request.method == "POST":
         pi = User.objects.get(pk=id)
         pi.delete()
         return HttpResponseRedirect('/home/add/')
+
+
+def update_data(request,id):
+    if request.method == 'POST':
+        pi = User.objects.get(pk=id)
+        fm = UserRegistration(request.POST,instance=pi)
+        if fm.is_valid():
+            fm.save()
+        return HttpResponseRedirect('/home/add/')
+    else:
+        pi = User.objects.get(pk=id)
+        fm=UserRegistration(instance=pi)
+    return render(request,'register/updateandshow.html',{'form':fm})
