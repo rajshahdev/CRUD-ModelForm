@@ -1,4 +1,5 @@
 from re import U
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import UserRegistration
 from .models import User
@@ -20,7 +21,15 @@ def show_home(request):
             fm = UserRegistration()
     else:
         fm = UserRegistration()
-    return render(request,'register/addandshow.html',{'form':fm})
+    get_all = User.objects.all()
+
+    return render(request,'register/addandshow.html',{'form':fm,'show':get_all})
 
 def show_update(request):
     return render(request,'register/updateandshow.html')
+
+def delete_data(request,id):
+    if request.method == "POST":
+        pi = User.objects.get(pk=id)
+        pi.delete()
+        return HttpResponseRedirect('/home/add/')
